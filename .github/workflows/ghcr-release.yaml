@@ -42,18 +42,18 @@ jobs:
       with:
         context: "./ui"
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-console:${{ github.ref_name }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-console:latest
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-console:${{ github.sha }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-console:latest
 
     - name: Build and push graphql
       uses: docker/build-push-action@v5
       with:
         context: "./graphql"
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-graphql:${{ github.ref_name }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-graphql:latest
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-graphql:${{ github.sha }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-graphql:latest
 
     - name: Build and push ui
       uses: docker/build-push-action@v5
       with:
         context: "."
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-worker:${{ github.ref_name }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-worker:latest
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-worker:${{ github.sha }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-worker:latest
