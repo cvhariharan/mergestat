@@ -3,7 +3,7 @@ name: Mergestat Release
 on:
   push:
     branches:
-      - "master"
+      - "release/**"
 
 env:
   REGISTRY: ghcr.io
