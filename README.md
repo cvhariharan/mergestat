@@ -1,15 +1,5 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/mergestat/mergestat)](https://goreportcard.com/report/github.com/mergestat/mergestat)
-[![CI Worker (Golang)](https://github.com/mergestat/mergestat/actions/workflows/ci-worker.yaml/badge.svg)](https://github.com/mergestat/mergestat/actions/workflows/ci-worker.yaml)
-[![CI Frontend (UI)](https://github.com/mergestat/mergestat/actions/workflows/ci-frontend.yaml/badge.svg)](https://github.com/mergestat/mergestat/actions/workflows/ci-frontend.yaml)
-[![Twitter Follow](https://img.shields.io/twitter/follow/mergestat)](https://twitter.com/mergestat)
-[![Slack Community](https://badgen.net/badge/icon/slack?icon=slack&label)](https://join.slack.com/t/mergestatcommunity/shared_invite/zt-xvvtvcz9-w3JJVIdhLgEWrVrKKNXOYg)
-
-# mergestat <a href="https://docs.mergestat.com/"><img align="right" src="https://github.com/mergestat/mergestat/raw/main/docs/logo.png" alt="MergeStat Logo" height="100"></a>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/banner-dark-mode.png">
-  <img alt="Banner describing MergeStat" src="docs/banner-light-mode.png">
-</picture>
+> [!NOTE]
+> This fork has some modifications to make it possible to run mergestat worker as a non-privileged container.
 
 MergeStat enables SQL queries for data in git repositories (and related sources, such as the GitHub API). It allows you to ask questions about the history and contents of your source code.
 
