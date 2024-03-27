@@ -1,7 +1,6 @@
 services:
   worker:
     image: ""
-    privileged: true
     build: .
   graphql:
     image: ""
