@@ -53,6 +53,10 @@ var (
 	// baseCloneDir       = os.Getenv("BASE_CLONE_DIR")
 	concurrencyEnv = os.Getenv("CONCURRENCY")
 	dockerNetwork  = os.Getenv("DOCKER_NETWORK_NAME")
+
+	// seconds
+	autoImportSchedule    = 15
+	containerSyncSchedule = 60
 )
 
 func repoLocator() services.RepoLocator {
@@ -291,12 +295,28 @@ func main() {
 	go timeout.New(&logger, pool).Start(ctx, time.Minute)
 	go syncer.New(pool, embedded, &logger, concurrency, time.Duration(syncerInterval)*time.Second).Start(ctx)
 
-	// run a basic cron every minute to schedule a repos/auto-import job
+	// run a basic cron based on autoImportSchedule value to schedule a repos/auto-import job
 	// these jobs are idempotent, and so, multiple instances can run at same time without conflict
-	go cron.AutoImport(ctx, 15*time.Second, upstream)
+	if autoImportScheduleStr := os.Getenv("AUTO_IMPORT_SCHEDULE"); len(autoImportScheduleStr) > 0 {
+		schedule, err := strconv.Atoi(autoImportScheduleStr)
+		if err != nil {
+			logger.Err(err).Msgf("incorrect value for AUTO_IMPORT_SCHEDULE, using default of %d seconds", autoImportSchedule)
+			schedule = autoImportSchedule
+		}
+		autoImportSchedule = schedule
+	}
+	go cron.AutoImport(ctx, time.Duration(autoImportSchedule)*time.Second, upstream)
 
-	// run container sync scheduler every minute
-	go cron.ContainerSync(ctx, 1*time.Minute, upstream)
+	// run container sync scheduler as defined by containerSyncSchedule
+	if containerSyncScheduleStr := os.Getenv("CONTAINER_SYNC_SCHEDULE"); len(containerSyncScheduleStr) > 0 {
+		schedule, err := strconv.Atoi(containerSyncScheduleStr)
+		if err != nil {
+			logger.Err(err).Msgf("incorrect value for CONTAINER_SYNC_SCHEDULE, using default of %d seconds", containerSyncSchedule)
+			schedule = containerSyncSchedule
+		}
+		containerSyncSchedule = schedule
+	}
+	go cron.ContainerSync(ctx, time.Duration(containerSyncSchedule)*time.Minute, upstream)
 
 	if os.Getenv("DEBUG") != "" {
 		go func() {

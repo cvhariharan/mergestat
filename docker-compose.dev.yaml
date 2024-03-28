@@ -52,6 +52,12 @@ services:
       # This is used when scan containers are created so that they can access the services defined here.
       # This network should have the postgres container.
       DOCKER_NETWORK_NAME: mergestat
+
+      # Import every 5 mins
+      AUTO_IMPORT_SCHEDULE: 300
+
+      # Run container syncs every 15 mins
+      CONTAINER_SYNC_SCHEDULE: 900
     ports:
       - 3301:8080
     volumes:
